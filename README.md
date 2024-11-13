@@ -46,3 +46,29 @@ If you see out of date documentation, lack of tests, etc., you can help out by e
 - sending a pull request with modifications (remember to read [contributing guide](https://github.com/cptactionhank/docker-atlassian-jira-software/blob/master/CONTRIBUTING.md) before.)
 
 Continuous Integration and Continuous Delivery is made possible with the great services from [GitHub](https://github.com), [Travis CI](https://travis-ci.org/), and [CircleCI](https://circleci.com/) written in [Ruby](https://www.ruby-lang.org/), using [RSpec](http://rspec.info/), [Capybara](http://teamcapybara.github.io/capybara/), and [PhantomJS](http://phantomjs.org/) frameworks.
+
+## 构建镜像
+
+```shell
+docker build -t jira:latest .
+```
+
+## 启动容器
+```shell
+docker run -d -p 8080:8080 -v /opt/jira/data:/var/atlassian/jira -v /opt/jira/logs:/opt/atlassian/jira/logs jira:latest
+```
+
+## 生成许可证
+
+在 `atlassian-agent.jar` 的目录下执行
+```shell
+java -jar atlassian-agent.jar -d -m xxx@qq.com -n jira-software -p jira -o http://你的IP:8080 -s XXXX-XXXX-XXXX-XXXX
+```
+
+## 所需工具包
+
+如果官方下载地址慢，建议将软件包放到ftp服务器中，并修改Dockerfile中的地址，再进行构建。
+
+通过百度网盘分享的文件：jira
+链接：https://pan.baidu.com/s/1U8GO3BXOymw0ytAB8AAUJQ?pwd=hrkb
+提取码：hrkb
