@@ -69,6 +69,11 @@ java -jar atlassian-agent.jar -d -m xxx@qq.com -n jira-software -p jira -o http:
 
 如果官方下载地址慢，建议将软件包放到ftp服务器中，并修改Dockerfile中的地址，再进行构建。
 
-通过百度网盘分享的文件：jira
-链接：https://pan.baidu.com/s/1U8GO3BXOymw0ytAB8AAUJQ?pwd=hrkb
-提取码：hrkb
+> 通过百度网盘分享的文件：jira
+> 链接：https://pan.baidu.com/s/1U8GO3BXOymw0ytAB8AAUJQ?pwd=hrkb
+> 提取码：hrkb
+
+## 申明
+
+- 本项目只做个人学习研究之用，不得用于商业用途！
+- 商业使用请向 [Atlassian](https://www.atlassian.com/) 购买正版，谢谢合作！
