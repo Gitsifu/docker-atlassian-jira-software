@@ -23,6 +23,9 @@ ENV JIRA_DOWNLOAD_HOST=http://127.0.0.1
 ENV MYSQL_DRIVER_DOWNLOAD_HOST=http://127.0.0.1
 ENV POSTGRESQL_DOWNLOAD_HOST=http://127.0.0.1
 
+# 将代理破解包加入容器
+COPY "atlassian-agent.jar" /opt/atlassian/jira/
+
 # Install Atlassian JIRA and helper tools and setup initial home
 # directory structure.
 RUN set -x \
@@ -49,15 +52,9 @@ RUN set -x \
     && chown -R daemon:daemon  "${JIRA_INSTALL}/work" \
     && sed --in-place          "s/java version/openjdk version/g" "${JIRA_INSTALL}/bin/check-java.sh" \
     && echo -e                 "\njira.home=$JIRA_HOME" >> "${JIRA_INSTALL}/atlassian-jira/WEB-INF/classes/jira-application.properties" \
-    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml"
-
-USER root
-
-# 将代理破解包加入容器
-COPY "atlassian-agent.jar" /opt/atlassian/jira/
-
-# 设置启动加载代理包
-RUN echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/jira/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh
+    && touch -d "@0"           "${JIRA_INSTALL}/conf/server.xml" \
+    # 设置启动加载代理包
+    && echo 'export CATALINA_OPTS="-javaagent:/opt/atlassian/jira/atlassian-agent.jar ${CATALINA_OPTS}"' >> /opt/atlassian/jira/bin/setenv.sh
 
 # Use the default unprivileged account. This could be considered bad practice
 # on systems where multiple processes end up being executed by 'daemon' but
