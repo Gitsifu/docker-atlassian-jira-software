@@ -55,8 +55,14 @@ docker build -t jira:latest .
 
 ## 启动容器
 ```shell
-docker run -d -p 8080:8080 -v /opt/jira/data:/var/atlassian/jira -v /opt/jira/logs:/opt/atlassian/jira/logs jira:latest
+docker run -d -p 8080:8080 -v /opt/jira/data:/var/atlassian/jira -v /opt/jira/logs:/opt/atlassian/jira/logs -v /etc/localtime:/etc/localtime:ro jira:latest
 ```
+
+说明：
+
+- `-v /etc/localtime:/etc/localtime:ro` 目的为了解决宿主机和容器之间时区不一致问题
+- `-v /opt/jira/data:/var/atlassian/jira` 挂载数据目录
+- `-v /opt/jira/logs:/opt/atlassian/jira/logs` 挂载日志目录
 
 ## 生成许可证
 
@@ -64,6 +70,14 @@ docker run -d -p 8080:8080 -v /opt/jira/data:/var/atlassian/jira -v /opt/jira/lo
 ```shell
 java -jar atlassian-agent.jar -d -m xxx@qq.com -n jira-software -p jira -o http://你的IP:8080 -s XXXX-XXXX-XXXX-XXXX
 ```
+
+重要参数说明：
+
+- `-p` 激活产品名称
+- `-o` 激活服务器地址
+- `-s` 激活服务器ID
+
+更多参数说明可通过 `java -jar atlassian-agent.jar -h` 查看
 
 ## 所需工具包
 
